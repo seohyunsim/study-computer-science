@@ -1,35 +1,54 @@
-class Person {
+// 공통 인터페이스
+class House {
   constructor(build) {
     if (build) {
-      this.id = build.id;
-      this.name = build.name;
-      this.age = build.age;
+      this.roof = build.roof;
+      this.pool = build.pool;
+      this.garage = build.garage;
+      this.garden = build.garden;
     }
   }
 
-  static get Build() {
-    class Build {
-      name(name) {
-        this.name = name;
+  // 빌더 생성
+  static get Builder() {
+    class Builder {
+      setRoof(roof) {
+        this.roof = roof;
         return this;
       }
-      age(age) {
-        this.age = age;
+
+      setPool(pool) {
+        this.pool = pool;
         return this;
       }
-      height(height) {
-        this.height = height;
+
+      setGarage(garage) {
+        this.garage = garage;
         return this;
       }
+
+      setGarden(garden) {
+        this.garden = garden;
+        return this;
+      }
+
       build() {
-        return new Person(this);
+        return new House(this);
       }
     }
-    return new Build();
+
+    return new Builder();
   }
 }
 
-const personBuilder1 = person.build;
-const person1 = personBuilder1.name("tatiana").age(26);
-const personBuilder2 = person.build;
-const person2 = personBuilder2.name("James").age(50);
+const builder = House.Builder;
+const user1 = builder
+  .setRoof("태양광 지붕")
+  .setPool("300사이즈 수영장")
+  .setGarage("주차 2대 가능")
+  .build();
+console.log("user1", user1);
+
+const builder2 = House.Builder;
+const user2 = builder2.setPool("휘트니스 센터").setGarden("텃밭").build();
+console.log("user2", user2);
