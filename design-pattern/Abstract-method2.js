@@ -64,8 +64,8 @@ class Pepperoni extends Pizza {
 // 클라이언트 코드
 const pizzaFactory = new PizzaFactory();
 const cheeze = pizzaFactory.createCheeze();
-console.log(cheeze.makePizza());
+console.log(cheeze.makePizza(cheeze));
 const potato = pizzaFactory.createPatato();
-console.log(potato.makePizza());
+console.log(potato.makePizza(potato));
 const pepperoni = pizzaFactory.createPepperoni();
-console.log(pepperoni.makePizza());
+console.log(pepperoni.makePizza(pepperoni));
