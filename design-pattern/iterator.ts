@@ -8,43 +8,43 @@ interface Iterator<T> {
   next(): IteratorResult<T>;
 }
 
-// 동물 클래스
-class Animal {
+// 과일 클래스
+class Fruit {
   constructor(public name: string) {}
 }
 
-// 동물원 클래스
-class Zoo implements Iterable<Animal> {
-  private animals: Animal[];
+// 과일 바구니 클래스
+class FruitBasket implements Iterable<Fruit> {
+  private fruits: Fruit[];
 
   constructor() {
-    this.animals = [];
+    this.fruits = [];
   }
 
-  addAnimal(animal: Animal) {
-    this.animals.push(animal);
+  addFruit(fruit: Fruit) {
+    this.fruits.push(fruit);
   }
 
-  [Symbol.iterator](): Iterator<Animal> {
-    return new ZooIterator(this.animals);
+  [Symbol.iterator](): Iterator<Fruit> {
+    return new FruitBasketIterator(this.fruits);
   }
 }
 
-// 동물원 반복자 클래스
-class ZooIterator implements Iterator<Animal> {
-  private animals: Animal[];
+// 과일 바구니 반복자 클래스
+class FruitBasketIterator implements Iterator<Fruit> {
+  private fruits: Fruit[];
   private index: number;
 
-  constructor(animals: Animal[]) {
-    this.animals = animals;
+  constructor(fruits: Fruit[]) {
+    this.fruits = fruits;
     this.index = 0;
   }
 
-  next(): IteratorResult<Animal> {
-    if (this.index < this.animals.length) {
-      const animal = this.animals[this.index];
+  next(): IteratorResult<Fruit> {
+    if (this.index < this.fruits.length) {
+      const fruit = this.fruits[this.index];
       this.index++;
-      return { value: animal, done: false };
+      return { value: fruit, done: false };
     } else {
       return { value: undefined, done: true };
     }
@@ -52,14 +52,18 @@ class ZooIterator implements Iterator<Animal> {
 }
 
 // 예제 실행
-const zoo = new Zoo();
-zoo.addAnimal(new Animal("Lion"));
-zoo.addAnimal(new Animal("Elephant"));
-zoo.addAnimal(new Animal("Giraffe"));
+const fruitBasket = new FruitBasket();
+fruitBasket.addFruit(new Fruit("바나나"));
+fruitBasket.addFruit(new Fruit("키위"));
+fruitBasket.addFruit(new Fruit("딸기"));
 
-const iterator = zoo[Symbol.iterator]();
+const iterator = fruitBasket[Symbol.iterator]();
+const fruitList: string[] = [];
 let result = iterator.next();
+
 while (!result.done) {
-  console.log(result.value.name);
+  fruitList.push(result.value.name);
   result = iterator.next();
 }
+
+console.log(`과일 바구니에 ${fruitList}를 담도록 주문하였다.`);
